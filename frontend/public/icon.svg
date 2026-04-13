@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="url(#bg)"/>
+  <!-- Simple brain silhouette (Noxis) -->
+  <path fill="#38bdf8" fill-opacity="0.95"
+    d="M90 44c-8 0-15 3-20 9-4-2-9-3-14-3-14 0-25 11-25 25 0 5 1 10 4 14-5 6-8 14-8 22 0 18 14 32 32 32h2c5 9 15 15 27 15 12 0 22-6 27-15h2c18 0 32-14 32-32 0-8-3-16-8-22 3-4 4-9 4-14 0-14-11-25-25-25-5 0-10 1-14 3-5-6-12-9-20-9Z"/>
+  <path fill="#0ea5e9" fill-opacity="0.35"
+    d="M68 78c0-6 5-11 11-11s11 5 11 11-5 11-11 11-11-5-11-11Zm32 0c0-6 5-11 11-11s11 5 11 11-5 11-11 11-11-5-11-11Z"/>
+</svg>

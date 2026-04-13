@@ -1,7 +1,9 @@
 // Noxis API Client
 // Configure this URL after deploying to Render
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_NOXIS_API_URL || "http://localhost:5000"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
+console.log("API BASE URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 
 export type ModelType = "noxis-fast" | "noxis-pro" | "noxis-ultra"
 

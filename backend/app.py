@@ -58,8 +58,8 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
-    backend_url = f"http://localhost:{Config.PORT}"
+    frontend_url = os.getenv("FRONTEND_URL", "https://noxis-ai-alpha.vercel.app")
+    backend_url = f"https://noxisai.onrender.com/"
     print("\nNoxis backend is starting...")
     print(f"Backend:  {backend_url}")
     print(f"Health:   {backend_url}/health")

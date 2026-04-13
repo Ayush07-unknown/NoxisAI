@@ -20,7 +20,8 @@ logger = get_logger("app")
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, origins=["https://noxis-ai-alpha.vercel.app/"])
+
 
     ensure_storage_path(Config.HISTORY_PATH)
     ensure_storage_path(Config.MEMORY_PATH)

@@ -10,8 +10,7 @@ import { SettingsPanel } from "./settings-panel"
 import { PerformanceIndicator } from "./performance-indicator"
 import type { Chat, Message } from "./types"
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_NOXIS_API_URL || "http://localhost:5000"
+import { CONFIG } from "@/lib/config"
 
 function generateId() {
   return Math.random().toString(36).substring(2, 15)
@@ -136,7 +135,7 @@ export function NoxisApp() {
       abortControllerRef.current = new AbortController()
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/chat/stream`, {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/chat/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userMessage }),

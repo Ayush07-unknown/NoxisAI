@@ -5,8 +5,7 @@ import { Copy, Check, Play, X, Code2, Loader2, Terminal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_NOXIS_API_URL || "http://localhost:5000"
+import { CONFIG } from "@/lib/config"
 
 type RunKind = "iframe" | "python" | null
 
@@ -125,7 +124,7 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
     setServerOutput("")
     setServerError("")
     try {
-      const res = await fetch(`${API_BASE_URL}/api/execute`, {
+      const res = await fetch(`${CONFIG.API_BASE_URL}/api/execute`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),

@@ -1,9 +1,12 @@
 // Noxis API Client
+
 // Configure this URL after deploying to Render
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 console.log("API BASE URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
+
+import { CONFIG } from "./config"
 
 export type ModelType = "noxis-fast" | "noxis-pro" | "noxis-ultra"
 
@@ -35,7 +38,7 @@ export async function sendMessageStream(
   onError: (error: string) => void
 ): Promise<void> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/chat/stream`, {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/chat/stream`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +128,7 @@ export async function generateTitle(
  * Clear session memory
  */
 export async function clearMemory(sessionId: string): Promise<void> {
-  await fetch(`${API_BASE_URL}/api/memory`, { method: "DELETE" })
+  await fetch(`${CONFIG.API_BASE_URL}/api/memory`, { method: "DELETE" })
 }
 
 /**
@@ -133,7 +136,7 @@ export async function clearMemory(sessionId: string): Promise<void> {
  */
 export async function checkHealth(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}/health`, {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/health`, {
       method: "GET",
     })
     return response.ok

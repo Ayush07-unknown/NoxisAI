@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { setStoredUIMode, type UIMode, detectDeviceCapability } from "@/lib/ui-mode"
 import { useTheme } from "next-themes"
+import { CONFIG } from "@/lib/config"
 
 interface Message {
   id: string
@@ -245,25 +246,30 @@ export function LiteUI() {
 
     try {
       abortControllerRef.current = new AbortController()
-      const response = await fetch("/api/chat/stream", {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage, chatId }),
         signal: abortControllerRef.current.signal,
       })
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
       if (!response.body) throw new Error("No response body")
 
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
       let fullContent = ""
+      let buffer = ""
 
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
 
-        const chunk = decoder.decode(value, { stream: true })
-        const lines = chunk.split("\n")
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split("\n")
+        buffer = lines.pop() || ""
 
         for (const line of lines) {
           if (line.startsWith("data: ")) {
@@ -271,8 +277,9 @@ export function LiteUI() {
             if (data === "[DONE]") continue
             try {
               const parsed = JSON.parse(data)
-              if (parsed.type === "token" && parsed.content) {
-                fullContent += parsed.content
+              // Support both backend shape ({ token, done }) and legacy shape ({ type, content })
+              if ((parsed.token && typeof parsed.token === "string") || (parsed.type === "token" && parsed.content)) {
+                fullContent += parsed.token || parsed.content
                 setChats((prev) =>
                   prev.map((c) =>
                     c.id === chatId
@@ -287,7 +294,7 @@ export function LiteUI() {
                       : c
                   )
                 )
-              } else if (parsed.type === "done") {
+              } else if (parsed.done || parsed.type === "done") {
                 setChats((prev) =>
                   prev.map((c) =>
                     c.id === chatId

@@ -19,8 +19,14 @@ logger = get_logger("app")
 
 
 def create_app() -> Flask:
+    frontend_url = os.getenv("FRONTEND_URL")
+    
     app = Flask(__name__)
-    CORS(app, origins=["https://noxis-ai-alpha.vercel.app/"])
+    CORS(
+    app,
+    resources={r"/api/*": {"origins": frontend_url}},
+    supports_credentials=True
+)
 
 
     ensure_storage_path(Config.HISTORY_PATH)
